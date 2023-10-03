@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:m03/ShoppingList.dart';
+import 'package:m03/dbhelper.dart';
 // import 'package:my_sql_db/Praktek/model/ShoppingList.dart';
 
 class ShoppingListDialog {
-  ShoppingListDialog();
+  DBHelper _dbHelper;
+  ShoppingListDialog(this._dbHelper);
 
   final txtName = TextEditingController();
   final txtSum = TextEditingController();
@@ -45,6 +47,7 @@ class ShoppingListDialog {
                 onPressed: () {
                   list.name = txtName.text != "" ? txtName.text : "Empty";
                   list.sum = txtSum.text != "" ? int.parse(txtSum.text) : 0;
+                  _dbHelper.insertShoppingList(list);
                   Navigator.pop(context);
                 },
               ),

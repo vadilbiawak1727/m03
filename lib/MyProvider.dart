@@ -14,4 +14,9 @@ class ListProductProvider extends ChangeNotifier{
     _shoppingList.remove(ShoppingList);
     notifyListeners();
   }
+  
+  void clearShoppingList() {
+    _shoppingList.clear();
+    notifyListeners();
+  }
 }
