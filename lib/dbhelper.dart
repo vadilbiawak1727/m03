@@ -36,7 +36,7 @@ class DBHelper {
     if (_database !=null) {
       final List<Map<String, dynamic>> maps = 
           await _database!.query("shopping_List");
-      print("Isi DB" +maps.toString());
+      //print("Isi DB" +maps.toString());
       return List.generate(maps.length, (i) {
         return ShoppingList(maps[i]["id"], maps[i]["name"], maps[i]["sum"]);
       });

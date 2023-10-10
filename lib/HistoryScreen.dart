@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'HistoryProvider.dart';
+import 'package:m03/HistoryProvider.dart';
+import 'package:intl/intl.dart';
 
 class HistoryScreen extends StatelessWidget {
   @override
@@ -20,10 +21,15 @@ class HistoryScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: historyList.length,
               itemBuilder: (context, index) {
+                DateTime timestamp =
+                    DateTime.parse(historyList[index]['timestamp']);
+                String formattedTime =
+                    DateFormat.yMMMd().add_jm().format(timestamp);
+
                 return ListTile(
-                  title: Text(
-                      'Description: id: ${historyList[index]['id']}, name: ${historyList[index]['name']}, sum: ${historyList[index]['sum']}'),
-                  subtitle: Text('Time: ${historyList[index]['timestamp']}'),
+                  title:
+                      Text('Description: ${historyList[index]['description']}'),
+                  subtitle: Text('Time: $formattedTime'),
                 );
               },
             );

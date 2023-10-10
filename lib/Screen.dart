@@ -43,18 +43,23 @@ class _ScreenState extends State<Screen> {
     await prefs.setInt('lastId', lastId);
   }
 
-  Future<void> _deleteAllShoppingList() async {
-    await _dbHelper.deleteAllShoppingList();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Shopping lists deleted"),
-    ));
-    List<ShoppingList> shoppingList =
-        Provider.of<ListProductProvider>(context, listen: false)
-            .getShoppingList;
-    for (var item in shoppingList) {
-      await HistoryProvider.addDeletionToHistory(item.toMap());
-    }
+Future<void> _deleteAllShoppingList() async {
+  await _dbHelper.deleteAllShoppingList();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text("Shopping lists deleted"),
+  ));
+  List<ShoppingList> shoppingList =
+      Provider.of<ListProductProvider>(context, listen: false)
+          .getShoppingList;
+  for (var item in shoppingList) {
+    await HistoryProvider.addDeletionToHistory({
+      'id': item.id,
+      'name': item.name,
+      'sum': item.sum,
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

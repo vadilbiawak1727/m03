@@ -9,20 +9,21 @@ class HistoryProvider {
     return history?.map((item) {
       List<String> parts = item.split('|');
       return {
-        'timestamp': parts[0],
+        'timestamp': parts[1], // Ubah dari parts[0] ke parts[1]
         'description': parts[0],
       };
     }).toList() ?? [];
   }
 
-static Future<void> addDeletionToHistory(Map<String, dynamic> shoppingList) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<String>? history = prefs.getStringList(_historyKey);
-  history ??= [];
-  DateTime now = DateTime.now();
-  String timestamp = now.toLocal().toString();
-  history.add('$timestamp|$shoppingList');
-  await prefs.setStringList(_historyKey, history);
-}
+  static Future<void> addDeletionToHistory(Map<String, dynamic> shoppingList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? history = prefs.getStringList(_historyKey);
+    history ??= []; 
+    String description = 'id: ${shoppingList['id']}, name: ${shoppingList['name']}, sum: ${shoppingList['sum']}';
 
+    DateTime now = DateTime.now();
+    String timestamp = now.toLocal().toString();
+    history.add('$description|$timestamp');
+    await prefs.setStringList(_historyKey, history);
+  }
 }
